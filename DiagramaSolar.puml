@@ -1,0 +1,48 @@
+@startuml SistemaSolar
+skinparam classAttributeIconSize 0
+
+' Enumeración para los tipos de planeta
+enum TipoPlaneta {
+    GASEOSO
+    TERRESTRE
+    ENANO
+}
+
+' Clase modelo: representa un planeta del sistema solar
+class Planeta {
+    +nombre: String                     ' Nombre del planeta
+    +cantidadSatelites: int             ' Número de satélites
+    +masa: double                       ' Masa en kilogramos
+    +volumen: double                    ' Volumen en kilómetros cúbicos
+    +diametro: int                      ' Diámetro en kilómetros
+    +distanciaMediaAlSol: int           ' Distancia media al Sol en millones de kilómetros
+    +tipo: TipoPlaneta                  ' Tipo de planeta (GASEOSO, TERRESTRE, ENANO)
+    +observable: boolean                ' Si es observable a simple vista
+    +periodoOrbital: double             ' Período orbital en años
+    +periodoRotacion: double            ' Período de rotación en días
+    --
+    +calcularDensidad(): double         ' Calcula la densidad del planeta (masa / volumen)
+    +esPlanetaExterior(): boolean       ' Determina si el planeta es exterior al cinturón de asteroides
+}
+
+' Clase vista: muestra información al usuario
+class PlanetaView {
+    +mostrarPlaneta(planeta: Planeta): void     ' Muestra los atributos del planeta
+    +mostrarDensidad(densidad: double): void    ' Muestra la densidad del planeta
+    +mostrarExterior(esExterior: boolean): void ' Muestra si el planeta es exterior o no
+}
+
+' Clase controlador: conecta la vista y el modelo
+class PlanetaController {
+    -planeta: Planeta                   ' Objeto del modelo Planeta
+    -vista: PlanetaView                 ' Objeto de la vista PlanetaView
+    --
+    +mostrarInformacionPlaneta(): void  ' Muestra toda la información del planeta
+}
+
+' Relaciones entre clases
+PlanetaController --> Planeta : gestiona
+PlanetaController --> PlanetaView : actualiza
+Planeta --> TipoPlaneta : utiliza
+
+@enduml
